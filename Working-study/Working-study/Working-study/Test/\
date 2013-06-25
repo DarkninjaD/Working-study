@@ -1,0 +1,54 @@
+##!/bin/sh
+# Space_edit#!/bin/sh
+# Space_edit.tcl exec \
+tclsh "$0" ${1+"$@"}
+
+# this programe will take all the space and tabs in any give text
+# so they are alined.
+#this is also a homework! 
+
+set text "	  onec upon a time
+		  There was a frog
+		        on a log
+			in the rain
+                        he was a mad frog"
+
+proc Space_killer {string} {	
+#first each line of text is tread in a list
+
+	set edit [split $string \n]
+	
+	puts -nonewline "there is "
+	puts -nonewline [llength $edit]
+	puts " lines, in this text"
+	
+	for {set i 0 } {$i < 5} {incr i} {
+	
+	set line$i [split [lindex $edit $i] {}]
+}
+puts $line3
+puts $line2
+puts $line1
+#second each line coverst tabs to space and sets the number of bigging white space 
+	
+	foreach x line1 {
+	set min1 0
+	if { $x == {	} || $x == { } } {
+		if {$x == "{	}" } {set min1 [expr {$min1 + 8}]}
+		if {$x == "{ }"} {incr min1}
+} else {
+break}
+
+}
+puts $min1
+
+#threed comper each number that has been set find the smalles one then delete that amount to all lines
+
+
+
+#fourth spit out the text and hope it worked
+
+}
+
+
+Space_killer $text

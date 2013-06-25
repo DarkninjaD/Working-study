@@ -1,11 +1,15 @@
 ##!/bin/sh
 #tmp.tcl exec \ tclsh "$0" ${1+"$@"}
-set text "	hello world how are you today?
-		good to hear that! 
- 	 	Im doing good myself"
-set list [split $text \n]
-puts $list
-set n_list [split 
-puts [lindex $list 0 0]
+puts  "
+	 Tab Space
+ 	Space Tab
+	 	Tab Space Tab
+		 Tab Tab Space
+ 		Space Tab Tab
+	  Tab Space Space
+ 	 Space Tab Space
+  	Space Space Tab"
+set testl "t t t t s s s s"
 
+puts [llength [lsearch -all $testl t]]
 

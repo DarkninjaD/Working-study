@@ -20,7 +20,8 @@ proc Space_killer {string} {
 	puts -nonewline "there is "
 	puts -nonewline [llength $line_list]
 	puts " lines, in this text"
-	for {set i 0} {$i < [llength $line_list]} {incr i} {
+		
+	for {set i 0 } {$i < [llength $line_list]} {incr i} {
 	
 		lappend character_list [split [lindex $line_list $i] {}]	
 		}
@@ -30,32 +31,57 @@ proc Space_killer {string} {
 	set whitesize {}
 	set nl1 {}
 
+	for {set x 0} {$x < [llength $character_list]} {incr x} {
+		set WS_line$x 0
+		}
 
+	#foreach l1 $character_list {
 
+		#foreach l2 $l1 {
 
-	foreach line $character_list { 
-		foreach ding $line {
-			if {$ding == {	} || $ding == { }} {
-} else {set stopd [lsearch $line $ding]
-break}
+		#	#if {$l2 == {	} || $l2 == { } } {
+		#		#if {$l2 == {	} } {incr WS_line$n
+		#					set idx [lsearch -exact $l1 {	}]
+		#					#puts $idx
+		#					#puts [set $nl1 [lreplace $l1 $idx $idx { }]]}
+				#if {$l2 == { } } {incr WS_line$n}
+		#	} else {break}
+		#	}
+		#puts $nl1
+		#incr n}
+	#foreach print2 $character_list {  
+	#puts $print2
 }
+	#set bang [lindex $character_list 1]
+	#puts $bang
+
+	foreach line $character_list {  
+
+		foreach ding $line {
+			if {$ding == {	} || $ding == { } } {
+					} else {set stopd [lsearch $line $ding] }
+
 		set nline [lsearch $character_list $line]
-	
 		for {set thing 0} {$thing < [llength $line]} {incr thing} {
 			set id [lsearch $line {	}]
-			if {$id == -1 || $id >= $stopd} {
-				puts $stopd
-				puts $id
-				set character_list [lreplace $character_list $nline $nline $line]	
-break}
+			if {$id == -1 || $id == $stopd} {
+				set character_list [lreplace $character_list $nline $nline $line]
+				break}
 		set line [lreplace $line $id $id { }]
 			}	
-		
-}	
+		}
+}
+	foreach print $character_list {
+	puts $print
+}
 
+	set WS_list {}
+	
 
+	for {set s 0 } {$s < [expr {[llength $character_list]}] } {incr s} {
 
-puts $character_list
+	lappend WS_list [set WS_line$s]
+}
 
 	
 	#set tmp_list [lindex $character_list 1]
@@ -68,5 +94,5 @@ puts $character_list
 
 #fourth spit out the text and hope it worked
 
-}
+
 Space_killer $text

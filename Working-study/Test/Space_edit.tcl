@@ -7,66 +7,68 @@ tclsh "$0" ${1+"$@"}
 # so they are alined.
 #this is also a homework! 
 
-set text "	  onec upon a	time
-		  There was a frog
-		        on a log
-			in the rain
-                        he was a mad frog"
+
 
 proc Space_killer {string} {	
-#first each line of text is tread in a list	
+	#first each line of text is tread in a list	
 	set line_list [split $string \n]
-	set character_list {}
-	puts -nonewline "there is "
-	puts -nonewline [llength $line_list]
-	puts " lines, in this text"
-	for {set i 0} {$i < [llength $line_list]} {incr i} {
-	
-		lappend character_list [split [lindex $line_list $i] {}]	
-		}
-#second each line coverst tabs to space and sets the number of bigging white space 
-
-	set n 0
-	set whitesize {}
-	set nl1 {}
-
-
-
-
+	#puts "there are [llength $line_list] lines, in this text"
+	foreach line $line_list {
+		lappend character_list [split $line {}]	
+	}
+	#second each line coverst tabs to space and sets the number of bigging white space 
 	foreach line $character_list { 
 		foreach ding $line {
-			if {$ding == {	} || $ding == { }} {
-} else {set stopd [lsearch $line $ding]
-break}
-}
-		set nline [lsearch $character_list $line]
-	
-		for {set thing 0} {$thing < [llength $line]} {incr thing} {
-			set id [lsearch $line {	}]
-			if {$id == -1 || $id >= $stopd} {
-				puts $stopd
-				puts $id
-				set character_list [lreplace $character_list $nline $nline $line]	
-break}
-		set line [lreplace $line $id $id { }]
-			}	
+			if {$ding == "\t" || $ding == { }} {
+			} else {
+				set stopd [lsearch $line $ding]
+				break
+			}
+		}
 		
-}	
+		lappend slc [llength [lsearch -all [lrange $line 0 $stopd] { }]]
+		lappend tlc [llength [lsearch -all [lrange $line 0 $stopd] {	}]]
+	}
+	set cws [lrange [lsort -increasing $slc] 0 0]
+	set cwt [lrange [lsort -increasing $tlc] 0 0]
 
 
-
-puts $character_list
-
-	
-	#set tmp_list [lindex $character_list 1]
-	#set id [lsearch -exact  $tmp_list {	}]
-	#set tmp_list [lreplace $tmp_list $id $id { }]
-	#puts $tmp_list 
-#threed comper each number that has been set find the smalles one then delete that amount to all lines
-
-
-
-#fourth spit out the text and hope it worked
-
+	foreach line2 $character_list {
+		set liner $line2	
+		set cline [lsearch $character_list $line2] 
+		for {set incs 0 } {$incs < $cws} {incr incs} {
+			set ids [lsearch $liner { }]
+			set liner [lreplace $line2 $ids $ids ]
+		}	
+		for {set inct 0 } {$inct < $cwt} {incr inct} {
+			set idt [lsearch $liner {	}]
+			set liner [lreplace $liner $idt $idt ]
+		}
+		set character_list [lreplace $character_list $cline $cline $liner]	
+	}
+	foreach line3 $character_list {
+		set jline [lsearch $character_list $line3]
+		set joined [join $line3 ""]
+		set character_list [lreplace $character_list $jline $jline $joined] 
+	}
+	set character_list [join $character_list "\n"]	
+	puts $character_list
 }
-Space_killer $text
+
+set test1 {
+	set text [read [set fh [open [lindex $argv 0]]]][close $fh]
+}
+
+set test2 {
+	set text "	  onec upon a	time
+		  There was a frog
+		        on a log
+	 		in the rain
+           	        he was a mad frog"
+}
+
+foreach i [list 1 2] {
+	eval [set test$i]
+	#puts yyy${text}yyy
+	Space_killer $text
+}
