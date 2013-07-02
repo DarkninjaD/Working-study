@@ -1,7 +1,6 @@
 ##!/bin/sh
 #tmp.tcl exec \ tclsh "$0" ${1+"$@"}
-set test  "
-
+puts  "
 	 Tab Space
  	Space Tab
 	 	Tab Space Tab
@@ -10,7 +9,7 @@ set test  "
 	  Tab Space Space
  	 Space Tab Space
   	Space Space Tab"
-set list {s t s t t t }
-lappend search t
-lappend search s
-puts [lsearch -all -inline  $list $search]
+set testl "t t t t s s s s"
+
+puts [llength [lsearch -all $testl t]]
+

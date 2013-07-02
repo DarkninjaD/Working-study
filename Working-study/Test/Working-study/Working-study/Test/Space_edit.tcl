@@ -16,35 +16,22 @@ proc Space_killer {string} {
 	foreach line $line_list {
 		lappend character_list [split $line {}]	
 	}
-	#set slc {}
-	#set tlc {}
 	#second each line coverst tabs to space and sets the number of bigging white space 
-		puts "unedited text"
-	foreach test $character_list {
-		puts $test
-
-	}
 	foreach line $character_list { 
-
-	
 		foreach ding $line {
-		
-			  if {$ding == "\t" ||  $ding == { }} {
-				set Spaceline [lsearch -all $line { } ]
-				} else {
-			 	set stopd [lsearch $line $ding]
+			if {$ding == "\t" || $ding == { }} {
+			} else {
+				set stopd [lsearch $line $ding]
 				break
- 
 			}
 		}
-
-		if {$line == {} || $line == $spaceline} {
-			} else {
-			lappend slc [llength [lsearch -all [lrange $line 0 $stopd] { }]]
-			lappend tlc [llength [lsearch -all [lrange $line 0 $stopd] {	}]]}
+		
+		lappend slc [llength [lsearch -all [lrange $line 0 $stopd] { }]]
+		lappend tlc [llength [lsearch -all [lrange $line 0 $stopd] {	}]]
 	}
 	set cws [lrange [lsort -increasing $slc] 0 0]
 	set cwt [lrange [lsort -increasing $tlc] 0 0]
+
 
 	foreach line2 $character_list {
 		set liner $line2	
@@ -59,11 +46,6 @@ proc Space_killer {string} {
 		}
 		set character_list [lreplace $character_list $cline $cline $liner]	
 	}
-	puts "edited text"
-	foreach test $character_list {
-		puts $test
-	
-	}
 	foreach line3 $character_list {
 		set jline [lsearch $character_list $line3]
 		set joined [join $line3 ""]
@@ -73,15 +55,20 @@ proc Space_killer {string} {
 	puts $character_list
 }
 
-set text [read [open text]]
-#set text "
-#	onec upon a	time
-#	  There was a frog
-#	        on a log
-#		in the rain
-#
-#           	        he was a mad frog
-#					
-#					"
+set test1 {
+	set text [read [set fh [open [lindex $argv 0]]]][close $fh]
+}
 
-Space_killer $text
+set test2 {
+	set text "	  onec upon a	time
+		  There was a frog
+		        on a log
+	 		in the rain
+           	        he was a mad frog"
+}
+
+foreach i [list 1 2] {
+	eval [set test$i]
+	#puts yyy${text}yyy
+	Space_killer $text
+}
