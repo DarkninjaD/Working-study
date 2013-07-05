@@ -30,7 +30,6 @@ proc Space_killer {string} {
 		foreach ding $line {
 		
 			  if {$ding == "\t" ||  $ding == { }} {
-				set Spaceline [lsearch -all $line { } ]
 				} else {
 			 	set stopd [lsearch $line $ding]
 				break
@@ -38,7 +37,12 @@ proc Space_killer {string} {
 			}
 		}
 
-		if {$line == {} || $line == $spaceline} {
+	set space [lsearch -all $line { }]
+	set tab [lsearch -all $line "\t"]
+	set whiteline [llength [concat $tab $space]]
+	set linelength [llength $line]
+
+		if {$line == {} || $linelength == $whiteline} {
 			} else {
 			lappend slc [llength [lsearch -all [lrange $line 0 $stopd] { }]]
 			lappend tlc [llength [lsearch -all [lrange $line 0 $stopd] {	}]]}
@@ -47,18 +51,20 @@ proc Space_killer {string} {
 	set cwt [lrange [lsort -increasing $tlc] 0 0]
 
 	foreach line2 $character_list {
-		set liner $line2	
-		set cline [lsearch $character_list $line2] 
+		set liner $line2
+		set cline [lsearch $character_list $line2]
 		for {set incs 0 } {$incs < $cws} {incr incs} {
 			set ids [lsearch $liner { }]
-			set liner [lreplace $line2 $ids $ids ]
-		}	
+			set liner [lreplace $liner $ids $ids ]
+		}
+	
 		for {set inct 0 } {$inct < $cwt} {incr inct} {
 			set idt [lsearch $liner {	}]
 			set liner [lreplace $liner $idt $idt ]
 		}
 		set character_list [lreplace $character_list $cline $cline $liner]	
 	}
+
 	puts "edited text"
 	foreach test $character_list {
 		puts $test
